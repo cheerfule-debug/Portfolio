@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Digital Design Portfolio - Ericka Michal</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6; color: #333;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      overflow-x: hidden;
+    }
+    .presentation-container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+    .slide {
+      background: white; margin: 20px 0; padding: 40px; border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      opacity: 0; transform: translateY(50px); transition: all 0.6s ease;
+      min-height: 500px; display: flex; flex-direction: column; justify-content: center;
+    }
+    .slide.visible { opacity: 1; transform: translateY(0); }
+    .slide h1 { font-size: 3em; color: #2c3e50; text-align: center; margin-bottom: 30px; font-weight: 300; text-shadow: 2px 2px 4px rgba(0,0,0,0.1); }
+    .slide h2 { font-size: 2.5em; color: #34495e; text-align: center; margin-bottom: 25px; font-weight: 400; }
+    .slide h3 { font-size: 1.8em; color: #3498db; margin-bottom: 20px; border-bottom: 3px solid #3498db; padding-bottom: 10px; }
+    .slide p { font-size: 1.1em; margin-bottom: 20px; text-align: justify; line-height: 1.8; }
+    .title-slide { text-align: center; background: linear-gradient(135deg, #3498db, #2980b9); color: white; min-height: 600px; }
+    .title-slide h1 { color: white; font-size: 4em; margin-bottom: 20px; }
+    .subtitle { font-size: 1.5em; opacity: 0.9; margin-bottom: 30px; }
+    .content-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin: 30px 0; }
+    .content-item { padding: 25px; background: #f8f9fa; border-radius: 10px; border-left: 5px solid #3498db; transition: transform 0.3s ease; }
+    .content-item:hover { transform: translateY(-5px); box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
+    .image-placeholder {
+      width: 100%; height: 250px; background: linear-gradient(45deg, #ecf0f1, #bdc3c7);
+      border: 2px dashed #95a5a6; display: flex; align-items: center; justify-content: center;
+      margin: 20px 0; border-radius: 8px; color: #7f8c8d; font-weight: 500;
+    }
+    .before-after { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0; }
+    .before-after > div { text-align: center; }
+    .before-after h4 { margin-bottom: 10px; padding: 10px; background: #e74c3c; color: white; border-radius: 5px; }
+    .before-after > div:last-child h4 { background: #27ae60; }
+    .citation-box { background: #fff3cd; border: 1px solid #ffeaa7; padding: 15px; margin: 20px 0; border-radius: 8px; font-style: italic; }
+    .video-container { position: relative; width: 100%; height: 300px; background: #2c3e50; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; margin: 20px 0; }
+    .navigation { position: fixed; bottom: 30px; right: 30px; display: flex; gap: 10px; z-index: 1000; }
+    .nav-btn { padding: 12px 20px; background: #3498db; color: white; border: none; border-radius: 25px; cursor: pointer; font-size: 14px; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3); }
+    .nav-btn:hover { background: #2980b9; transform: translateY(-2px); }
+    .nav-btn:disabled { background: #95a5a6; cursor: not-allowed; transform: none; }
+    .progress-bar { position: fixed; top: 0; left: 0; height: 4px; background: #3498db; transition: width 0.3s ease; z-index: 1000; }
+    .accessibility-features { background: #e8f5e8; border-left: 5px solid #27ae60; padding: 20px; margin: 20px 0; border-radius: 5px; }
+    .design-principles { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0; }
+    .principle { padding: 15px; background: #f1c40f; color: #2c3e50; text-align: center; border-radius: 8px; font-weight: 600; }
+    @media (max-width: 768px) {
+      .slide { padding: 20px; margin: 10px 0; }
+      .slide h1 { font-size: 2.5em; }
+      .slide h2 { font-size: 2em; }
+      .before-after { grid-template-columns: 1fr; }
+      .navigation { bottom: 20px; right: 20px; }
+    }
+    @media (prefers-contrast: high) { body { background: white; } .slide { border: 2px solid #000; } }
+    @media (prefers-reduced-motion: reduce) { .slide, .content-item, .nav-btn { transition: none; } }
+  </style>
+</head>
+<body>
+  <div class="progress-bar" id="progressBar"></div>
+
+  <div class="presentation-container">
+    <!-- Slide 1: Title -->
+    <div class="slide title-slide visible" id="slide1">
+      <h1>Digital Design Portfolio</h1>
+      <p class="subtitle">Showcasing Creative Work & Technical Skills</p>
+      <p style="font-size: 1.3em; margin-top: 40px;">Ericka Michal</p>
+      <p style="font-size: 1.1em; opacity: 0.8;">BATECH 188 | Summer 2025</p>
+    </div>
+
+    <!-- Slide 2: Introduction -->
+    <div class="slide" id="slide2">
+      <h2>Introduction</h2>
+      <p>Welcome to my digital design portfolio! This presentation showcases the comprehensive work I've completed this quarter, demonstrating my growth in visual design, accessibility, typography, and multimedia creation.</p>
+      <div class="content-grid">
+        <div class="content-item">
+          <h3>Skills Developed</h3>
+          <ul style="margin-left: 20px; font-size: 1.1em;">
+            <li>Universal Design & Accessibility</li>
+            <li>Visual Design Principles</li>
+            <li>Typography & Layout</li>
+            <li>Digital Media Creation</li>
+            <li>Copyright & Licensing</li>
+          </ul>
+        </div>
+        <div class="content-item">
+          <h3>Portfolio Contents</h3>
+          <ul style="margin-left: 20px; font-size: 1.1em;">
+            <li>Accessible Document Design</li>
+            <li>Logo Creation</li>
+            <li>Digital Publications</li>
+            <li>Video Production</li>
+            <li>Visual Content Creation</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 3: Accessible Document -->
+    <div class="slide" id="slide3">
+      <h2>Accessible Document Design</h2>
+      <p><strong>Assignment Context:</strong> Create a professionally formatted document following universal design principles to ensure accessibility for all users, including those with disabilities.</p>
+
+      <div class="accessibility-features">
+        <h3>Accessibility Features Successfully Implemented:</h3>
+        <ul style="margin-left: 20px; font-size: 1.1em;">
+          <li><strong>Clear Heading Hierarchy:</strong> Logical H1, H2, H3 structure for screen readers</li>
+          <li><strong>Readable Typography:</strong> Sans-serif font with appropriate sizing for easy reading</li>
+          <li><strong>Organized Information:</strong> Bulleted lists and tables for easy scanning</li>
+          <li><strong>Logical Reading Order:</strong> Information flows logically from overview to application process</li>
+          <li><strong>Contact Information:</strong> Multiple ways to reach the organization (phone, email, mail)</li>
+          <li><strong>Step-by-Step Instructions:</strong> Clear, numbered application process</li>
+        </ul>
+      </div>
+
+      <div style="margin: 30px 0;">
+        <h3>Document Overview: "City of Tawny Creek Volunteer Program"</h3>
+        <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; border-left: 5px solid #3498db;">
+          <p><strong>Document Purpose:</strong> Comprehensive guide for potential volunteers explaining opportunities, requirements, and application processes.</p>
+          <p><strong>Key Sections:</strong></p>
+          <ul style="margin-left: 20px;">
+            <li>Program Overview and Requirements</li>
+            <li>Volunteer Opportunities (Library, Museum, Parks & Recreation)</li>
+            <li>Sports Team Sponsorship Information (with organized contact tables)</li>
+            <li>Step-by-step Application Process</li>
+            <li>Complete Contact Information</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="before-after">
+        <div>
+          <h4>Before: Original Coursework Document</h4>
+          <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; border: 2px solid #e74c3c;">
+            <p><strong>Provided Course Material - Issues Identified:</strong></p>
+            <ul style="margin-left: 20px; color: #c0392b;">
+              <li>❌ <strong>Dense layout:</strong> Large blocks of text without sufficient white space</li>
+              <li>❌ <strong>Image placement:</strong> Photos interrupted text flow and reading order</li>
+              <li>❌ <strong>Complex tables:</strong> Contact information mixed within paragraph text</li>
+              <li>❌ <strong>Visual clutter:</strong> Multiple design elements competed for attention</li>
+              <li>❌ <strong>Inconsistent formatting:</strong> Varying text treatments throughout document</li>
+            </ul>
+            <p style="margin-top: 10px; font-style: italic; color: #7f8c8d;">
+              The original course material prioritized visual appeal over accessibility and usability.
+            </p>
+          </div>
+        </div>
+        <div>
+          <h4>After: My Accessible Redesign</h4>
+          <div style="background: #e8f5e8; padding: 15px; border-radius: 8px; border: 2px solid #27ae60;">
+            <p><strong>Accessibility Improvements I Made:</strong></p>
+            <ul style="margin-left: 20px; color: #27ae60;">
+              <li>✅ <strong>Clean hierarchy:</strong> Created clear heading structure (H1 → H2 → H3)</li>
+              <li>✅ <strong>Logical flow:</strong> Reorganized information in sequential, scannable order</li>
+              <li>✅ <strong>Simplified tables:</strong> Restructured contact information by clear categories</li>
+              <li>✅ <strong>Consistent formatting:</strong> Applied uniform spacing, fonts, and layout throughout</li>
+              <li>✅ <strong>Text-focused design:</strong> Removed visual distractions for better readability</li>
+              <li>✅ <strong>Step-by-step process:</strong> Organized application instructions into clear actions</li>
+            </ul>
+            <p style="margin-top: 10px; font-style: italic; color: #2d3436;">
+              My redesign prioritizes user experience and accessibility compliance.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div style="background: #e3f2fd; padding: 20px; border-radius: 10px; margin: 20px 0;">
+        <h4>Document Demonstrates Understanding Of:</h4>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-top: 15px;">
+          <div style="background: white; padding: 15px; border-radius: 8px;">
+            <strong>Information Architecture:</strong> Logical organization from general info to specific application steps
+          </div>
+          <div style="background: white; padding: 15px; border-radius: 8px;">
+            <strong>User Experience:</strong> Multiple volunteer options accommodate different interests and time commitments
+          </div>
+          <div style="background: white; padding: 15px; border-radius: 8px;">
+            <strong>Accessibility Standards:</strong> Clear headings, readable fonts, and organized layout
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 4: Logo Design -->
+    <div class="slide" id="slide4">
+      <h2>Logo Design</h2>
+      <p><strong>Assignment Context:</strong> Design a professional logo that represents personal brand identity while applying design principles and typography concepts.</p>
+
+      <div style="text-align: center; margin: 30px 0;">
+        <img src="Logo.png" alt="Content by Ericka logo featuring decorative blue floral border surrounding a central circular emblem with a traditional windmill in a pastoral landscape" style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+      </div>
+
+      <div class="content-grid">
+        <div class="content-item">
+          <h3>Design Elements</h3>
+          <p><strong>What My Logo Communicates:</strong></p>
+          <ul style="margin-left: 20px;">
+            <li><strong>Craftsmanship:</strong> Traditional windmill symbolizes dedication to quality work</li>
+            <li><strong>Creativity:</strong> Intricate floral border shows attention to decorative detail</li>
+            <li><strong>Heritage & Tradition:</strong> Classic blue and white color scheme with vintage aesthetic</li>
+            <li><strong>Personal Brand:</strong> "Content by Ericka" establishes clear creative identity</li>
+            <li><strong>Harmony:</strong> Balanced composition with natural elements creating cohesive design</li>
+          </ul>
+        </div>
+        <div class="content-item">
+          <h3>Typography Analysis</h3>
+          <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin: 10px 0;">
+            <p><strong>Typeface Category:</strong> Bold Sans-serif</p>
+            <p><strong>Style Choice:</strong> The strong, geometric letterforms create excellent readability and convey stability and trustworthiness - perfect for a content creator's brand.</p>
+            <p><strong>Contrast Principle:</strong> High contrast between the bold blue text and cream background ensures accessibility while maintaining visual impact.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="citation-box">
+        <strong>Citation:</strong> Logo created by Ericka with ChatGPT | Original design work featuring traditional windmill motif with decorative floral elements
+      </div>
+    </div>
+
+    <!-- Slide 5: Visual Content -->
+    <div class="slide" id="slide5">
+      <h2>Visual Content Creation</h2>
+      <p><strong>Assignment Context:</strong> Create and edit digital images using AI tools and design software to support various communication goals.</p>
+
+      <div class="content-grid">
+        <div class="content-item">
+          <h3>AI-Generated Interior Design</h3>
+          <div style="text-align: center;">
+            <img src="bed.png" alt="Luxurious four-poster bed with ornate dark wood carved frame, green patterned bedding, and matching green curtains in an elegant traditional bedroom setting" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+          </div>
+          <div class="citation-box">Created by Ericka with DaVinci AI</div>
+          <p><strong>Design Elements:</strong> Classical interior design with rich mahogany wood tones, coordinated green textiles, and traditional four-poster architecture.</p>
+        </div>
+
+        <div class="content-item">
+          <h3>AI-Generated Pastoral Landscape</h3>
+          <div style="text-align: center;">
+            <img src="cow.jpg" alt="Pastoral scene featuring brown and white cows in a sunny meadow with wildflowers, framed by large trees under a blue sky with puffy white clouds" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+          </div>
+          <div class="citation-box">Created by Ericka with [AI Tool Name]</div>
+          <p><strong>Artistic Elements:</strong> Demonstrates understanding of landscape composition, natural lighting, and realistic animal rendering with attention to environmental storytelling.</p>
+        </div>
+      </div>
+
+      <div class="content-item">
+        <h3>Licensed Image Research & Citation</h3>
+        <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 15px 0;">
+          <p><strong>Assignment Context:</strong> Research and properly cite Creative Commons licensed images, demonstrating understanding of copyright law and ethical content usage.</p>
+
+          <div style="background: white; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 4px solid #3498db;">
+            <h4>Three Licensed Images Documented:</h4>
+            <ul style="margin-left: 20px; line-height: 1.6;">
+              <li><strong>Times Square Kiss Recreation:</strong> BrechtBug (CC BY-NC-ND 2.0)</li>
+              <li><strong>Mountain Landscape:</strong> Ben Grey (CC BY-SA 2.0)</li>
+              <li><strong>Candles:</strong> Public Domain (CC0)</li>
+            </ul>
+          </div>
+
+          <p><strong>Skills Demonstrated:</strong></p>
+          <ul style="margin-left: 20px;">
+            <li>Understanding different Creative Commons license types and restrictions</li>
+            <li>Proper attribution formatting with creator, source, and license information</li>
+            <li>Research skills for finding appropriately licensed content</li>
+            <li>Legal compliance in content creation and usage</li>
+          </ul>
+        </div>
+
+        <div class="citation-box">
+          <strong>Professional Citation Example:</strong><br>
+          Image 1: BrechtBug, Creative Commons BY-NC-ND 2.0, Source: Flickr<br>
+          Image 2: Ben Grey, Creative Commons BY-SA 2.0, Source: Flickr<br>
+          Image 3: Public Domain, Creative Commons CC0, Source: PxHere
+        </div>
+      </div>
+
+      <div class="content-item">
+        <h3>Additional Visual Work</h3>
+        <div style="text-align: center;">
+          <img src="church.jpeg" alt="Orthodox church with golden domes set in a winter mountain landscape with snow, autumn trees, and a reflecting stream in the foreground" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+        </div>
+        <div class="citation-box">Created by Ericka with [AI Tool Name]</div>
+        <p><strong>Landscape Architecture:</strong> Complex scene combining architectural detail, seasonal elements, and atmospheric lighting to create a contemplative, spiritual mood.</p>
+      </div>
+
+      <p><strong>Skills Demonstrated:</strong> Digital image creation across multiple genres (interior design, rural pastoral, religious architecture), AI prompt engineering, and understanding of composition, lighting, and mood creation.</p>
+    </div>
+
+    <!-- Slide 6: Publications -->
+    <div class="slide" id="slide6">
+      <h2>Digital Publications</h2>
+      <p><strong>Assignment Context:</strong> Design professional flyers and posters that effectively communicate information while applying typography and layout principles.</p>
+
+      <div class="before-after">
+        <div>
+          <h3 style="text-align: center; color: #e74c3c;">Flyer Design</h3>
+          <div style="text-align: center; margin: 20px 0;">
+            <img src="flyer_Poster.jpg" alt="Vintage Car Sale and Collector's Swap Meet flyer" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+          </div>
+          <p><strong>Communication Goals:</strong> Build local community around vintage car culture in South Pierce County, providing an alternative to larger commercial events. Target audience includes car enthusiasts, families, and general public of all demographics.</p>
+
+          <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin: 15px 0;">
+            <p><strong>Design Elements Applied:</strong></p>
+            <ul style="margin-left: 20px;">
+              <li><strong>Visual hierarchy:</strong> Large title draws attention, followed by date/location, then details</li>
+              <li><strong>Contrast:</strong> Light text on vintage car background ensures readability</li>
+              <li><strong>Alignment:</strong> Left-aligned bullet points with center-aligned headers create organized layout</li>
+              <li><strong>Typography:</strong> Bold, condensed sans-serif conveys energy and accessibility</li>
+              <li><strong>Background choice:</strong> Authentic vintage car photo reinforces event theme</li>
+            </ul>
+          </div>
+        </div>
+
+        <div>
+          <h3 style="text-align: center; color: #27ae60;">Poster Design</h3>
+          <div style="text-align: center; margin: 20px 0;">
+            <img src="flyer_Poster.jpg" alt="Vintage Car Sale and Collector's Swap Meet poster" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+          </div>
+          <p><strong>Format Adaptation:</strong> Same design content as flyer but optimized for poster format - larger scale for wall mounting and viewing from distance. Demonstrates understanding of how one design concept can be adapted for multiple publication formats.</p>
+
+          <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin: 15px 0;">
+            <p><strong>Professional Design Practice:</strong> Creating multiple format versions from a single design concept is standard in the industry - allows for consistent branding across different media while optimizing readability and impact for each specific use case (handheld flyer vs. wall-mounted poster). Both created using ChatGPT.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-item">
+        <h3>Typography Principles Applied</h3>
+        <p>Both publications demonstrate effective use of:</p>
+        <ul style="margin-left: 20px; font-size: 1.1em;">
+          <li><strong>Typeface Categories:</strong> Bold condensed sans-serif fonts appropriate for event promotion</li>
+          <li><strong>Contrast:</strong> Light text on darker background ensures readability</li>
+          <li><strong>Hierarchy:</strong> Clear information hierarchy through font size and weight variation</li>
+          <li><strong>Readability:</strong> Text sized appropriately for intended viewing distance (closer for flyer, farther for poster)</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Slide 7: Video Project -->
+    <div class="slide" id="slide7">
+      <h2>Storyboard & Video Production</h2>
+      <p><strong>Assignment Context:</strong> Plan and execute a video project using storyboarding techniques, then create the final video with proper accessibility features.</p>
+
+      <div class="content-grid">
+        <div class="content-item">
+          <h3>Storyboard Planning</h3>
+          <div style="text-align: center; margin: 20px 0;">
+            <img src="storyboard.png" alt="Four-panel storyboard showing the process of making an avocado, lettuce, and tomato sandwich" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+          </div>
+          <p><strong>Project:</strong> "How to Make an Avocado, Lettuce, and Tomato Sandwich"</p>
+          <p><strong>Tool Used:</strong> PowerPoint (after testing multiple specialized storyboard tools)</p>
+          <p><strong>Process Learning:</strong> Discovered the limitations of free storyboard software and adapted by using familiar presentation tools to achieve professional results.</p>
+        </div>
+
+        <div class="content-item">
+          <h3>Final Video</h3>
+          <div style="position: relative; width: 100%; height: 315px; background: #000; border-radius: 10px; overflow: hidden; margin: 20px 0;">
+            <iframe width="100%" height="100%" src="https://www.youtube.com/embed/FWEe2JRPr7I"
+              title="Ericka's Sandwich Making Video" frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen style="border-radius: 10px;">
+            </iframe>
+          </div>
+          <div style="background: #e8f5e8; padding: 15px; border-radius: 8px; margin: 10px 0;">
+            <p><strong>Accessibility Features:</strong></p>
+            <ul style="margin-left: 20px;">
+              <li>Video hosted on YouTube with automatic caption generation available</li>
+              <li>Clear visual demonstration of each step</li>
+              <li>Embedded player supports keyboard navigation and multiple playback speeds</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <p><strong>Storyboard to Video Relationship:</strong> The four-panel storyboard effectively guided the video production process, ensuring logical flow from introduction through ingredient presentation, preparation steps, and final result. This demonstrates planning skills and the ability to translate static planning documents into dynamic video content.</p>
+
+      <div style="background: #fff3cd; padding: 20px; border-radius: 10px; margin: 20px 0;">
+        <h4>Technical Problem-Solving Demonstrated:</h4>
+        <p>When specialized storyboard tools (Boord, Canva, StoryboardThat) proved unreliable, successfully pivoted to PowerPoint to create a functional storyboard. This shows adaptability and practical problem-solving skills - important qualities for working with technology in professional environments.</p>
+      </div>
+
+      <div class="citation-box">
+        <strong>Video Credits:</strong> Produced by Ericka | Video available at: https://youtu.be/FWEe2JRPr7I | [Add any music credits or additional assets used]
+      </div>
+    </div>
+
+    <!-- Slide 8: Conclusion/About Me -->
+    <div class="slide" id="slide8">
+      <h2>Conclusion & About Me</h2>
+
+      <div class="content-grid">
+        <div class="content-item">
+          <h3>Key Learning Outcomes</h3>
+          <ul style="margin-left: 20px; font-size: 1.1em;">
+            <li><strong>Accessibility Awareness:</strong> Understanding how to create inclusive digital content</li>
+            <li><strong>Design Thinking:</strong> Applying proximity, alignment, repetition, and contrast effectively</li>
+            <li><strong>Typography Mastery:</strong> Using different typeface categories purposefully</li>
+            <li><strong>Digital Literacy:</strong> Creating content across multiple media formats</li>
+            <li><strong>Professional Ethics:</strong> Proper attribution and copyright compliance</li>
+          </ul>
+        </div>
+        <div class="content-item">
+          <h3>Future Applications</h3>
+          <p>This portfolio demonstrates my readiness to contribute to organizations that value:</p>
+          <ul style="margin-left: 20px; font-size: 1.1em;">
+            <li>Inclusive design practices</li>
+            <li>Professional visual communication</li>
+            <li>Multi-media content creation</li>
+            <li>Attention to detail and quality</li>
+            <li>Ethical content development</li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="text-align: center; margin-top: 40px; padding: 30px; background: #f8f9fa; border-radius: 10px;">
+        <h3 style="color: #2c3e50;">Contact Information</h3>
+        <p style="font-size: 1.2em; margin: 10px 0;">ericka.michal@bellevuecollege.edu</p>
+        <p style="font-size: 1.1em;">[Portfolio or LinkedIn]</p>
+        <p style="font-style: italic; margin-top: 20px;">Ready to bring creative, accessible design solutions to your team!</p>
+      </div>
+    </div>
+
+    <!-- Slide 9: Resources -->
+    <div class="slide" id="slide9">
+      <h2>Resources & Citations</h2>
+      <p>All content in this presentation has been created with proper licensing and attribution:</p>
+
+      <div class="content-item">
+        <h3>Original Work</h3>
+        <ul style="margin-left: 20px; font-size: 1.1em;">
+          <li>Logo Design: Created by Ericka - Original Work</li>
+          <li>Accessible Document: "City of Tawny Creek Volunteer Program" - Created by Ericka - Original Work</li>
+          <li>Flyer Design & Poster: Created by Ericka</li>
+          <li>Video Production: Produced by Ericka - Available at https://youtu.be/FWEe2JRPr7I</li>
+          <li>Storyboard: Created by Ericka</li>
+        </ul>
+      </div>
+
+      <div class="content-item">
+        <h3>AI-Assisted Content</h3>
+        <ul style="margin-left: 20px; font-size: 1.1em;">
+          <li>Accessible Document: Created by Ericka with ChatGPT</li>
+          <li>Interior Design Image: Created by Ericka with DaVinci AI</li>
+          <li>Pastoral Landscape: Created by Ericka with DaVinci AI</li>
+          <li>Orthodox Church Scene: Created by Ericka with DaVinci AI</li>
+        </ul>
+      </div>
+
+      <div class="content-item">
+        <h3>Licensed Materials & Citation Work</h3>
+        <ul style="margin-left: 20px; font-size: 1.1em;">
+          <li><strong>Times Square Kiss Recreation:</strong> BrechtBug (Creative Commons BY-NC-ND 2.0) - Flickr</li>
+          <li><strong>Mountain Landscape:</strong> Ben Grey (Creative Commons BY-SA 2.0) - Flickr</li>
+          <li><strong>Candles Array:</strong> Public Domain (Creative Commons CC0) - PxHere</li>
+          <li><em>Research conducted July 12, 2025</em></li>
+        </ul>
+      </div>
+
+      <div class="citation-box">
+        <strong>Color Contrast Verification:</strong> All text/background combinations have been tested using the WebAIM Color Contrast Checker and meet WCAG 2.1 AA standards for accessibility.
+      </div>
+    </div>
+  </div>
+
+  <div class="navigation">
+    <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">Previous</button>
+    <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Next</button>
+  </div>
+
+  <script>
+    let currentSlide = 1;
+    const totalSlides = 9;
+
+    document.addEventListener('DOMContentLoaded', function() {
+      updateSlideVisibility();
+      updateNavigation();
+      updateProgressBar();
+
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'ArrowRight' || e.key === ' ') {
+          e.preventDefault(); changeSlide(1);
+        } else if (e.key === 'ArrowLeft') {
+          e.preventDefault(); changeSlide(-1);
+        }
+      });
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) entry.target.classList.add('visible');
+        });
+      }, { threshold: 0.1 });
+      document.querySelectorAll('.slide').forEach(slide => observer.observe(slide));
+    });
+
+    function changeSlide(direction) {
+      const newSlide = currentSlide + direction;
+      if (newSlide >= 1 && newSlide <= totalSlides) {
+        currentSlide = newSlide;
+        updateSlideVisibility(); updateNavigation(); updateProgressBar();
+        document.getElementById(`slide${currentSlide}`).scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+    function updateSlideVisibility() {
+      for (let i = 1; i <= totalSlides; i++) {
+        const slide = document.getElementById(`slide${i}`);
+        if (i === currentSlide) {
+          slide.style.display = 'flex';
+          setTimeout(() => slide.classList.add('visible'), 100);
+        } else {
+          slide.style.display = 'none';
+          slide.classList.remove('visible');
+        }
+      }
+    }
+    function updateNavigation() {
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      prevBtn.disabled = currentSlide === 1;
+      nextBtn.disabled = currentSlide === totalSlides;
+      nextBtn.textContent = currentSlide === totalSlides ? 'Finished' : 'Next';
+    }
+    function updateProgressBar() {
+      const progress = (currentSlide / totalSlides) * 100;
+      document.getElementById('progressBar').style.width = progress + '%';
+    }
+
+    // Touch/swipe support
+    let touchStartX = 0; let touchEndX = 0;
+    document.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; });
+    document.addEventListener('touchend', e => { touchEndX = e.changedTouches[0].screenX; handleSwipe(); });
+    function handleSwipe() {
+      const swipeThreshold = 50; const diff = touchStartX - touchEndX;
+      if (Math.abs(diff) > swipeThreshold) changeSlide(diff > 0 ? 1 : -1);
+    }
+  </script>
+</body>
+</html>
